@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CountDown : MonoBehaviour
 {
-    [SerializeField] private Text uiText;
+    [SerializeField] private TextMeshProUGUI uiText;
     [SerializeField] private float mainTimer;
 
     public static float timer;
@@ -16,6 +17,7 @@ public class CountDown : MonoBehaviour
     void Start()
     {
         timer = mainTimer;
+        uiText = GetComponent<TextMeshProUGUI>();
     }
 
 

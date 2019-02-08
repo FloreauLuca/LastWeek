@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
     {
         
         direction = (Vector3.up * Input.GetAxisRaw("Vertical") + Vector3.right * Input.GetAxisRaw("Horizontal")) *playerSpeed;
+        if (Input.GetButtonDown("Fire"))
+        {
+
+        }
     }
 
     void FixedUpdate()

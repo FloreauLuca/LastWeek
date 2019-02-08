@@ -8,6 +8,7 @@ TagManager:
   - Candle
   - Wall
   - Paint
+  - Arrow
   layers:
   - Default
   - TransparentFX
@@ -44,4 +45,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 3701838871
     locked: 0
