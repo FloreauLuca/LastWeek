@@ -57,4 +57,16 @@ public class Player : MonoBehaviour
         playerRb.velocity = direction;
 
     }
+
+    public void InvincibilityStart()
+    {
+        StartCoroutine(Invincibility());
+    }
+
+    public IEnumerator Invincibility()
+    {
+        GetComponentInChildren<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(1);
+        GetComponentInChildren<SpriteRenderer>().color = Color.white;
+    }
 }

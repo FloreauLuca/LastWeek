@@ -15,6 +15,14 @@ public class Bullet : MonoBehaviour
     private Vector3 initialPosition;
 
     [SerializeField] private float speed;
+
+    public float Speed
+    {
+        get { return speed; }
+        set { speed = value; }
+    }
+
+    
     [SerializeField] private float timeBeforeDestroy;
 
 
@@ -55,6 +63,7 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.CompareTag("PlayerCheck"))
         {
             Destroy(gameObject);
+            other.GetComponent<Player>().InvincibilityStart();
         }
     }
 }
