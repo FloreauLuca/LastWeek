@@ -75,5 +75,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         end = true;
     }
+
+    private void Update()
+    {
+        if (Input.GetButton("Restart"))
+        {
+            SceneManager.LoadScene("Luca");
+        }
+    }
 }
 
