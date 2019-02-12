@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Win.unity
     guid: 633682481c2cf6a4a8fa63b7d873ce70
+  - enabled: 1
+    path: Assets/Scenes/Luca.unity
+    guid: b41d9e336ee093f47bde9bbaf7d9bc71
   m_configObjects: {}
