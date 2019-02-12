@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Paint
   - Arrow
+  - Rock
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - 
   - Player
   - platfrom
-  - 
-  - 
+  - hole
+  - rock
   - 
   - 
   - 
@@ -48,4 +49,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3701838871
+    locked: 0
+  - name: UI
+    uniqueID: 3860030533
     locked: 0
