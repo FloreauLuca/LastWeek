@@ -21,7 +21,7 @@ public class Door : MonoBehaviour
             if (!GameManager.Instance.Player.mapMoving)
             {
                 MoveRight();
-                CountDown.timer += 10;
+                //CountDown.timer += 10;
             }
         }
     }
