@@ -8,6 +8,8 @@ public class Boss : MonoBehaviour
 
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float nbBullet;
+    [SerializeField] private float radius;
+    [SerializeField] private float speed;
 
 
     // Start is called before the first frame update
@@ -33,9 +35,10 @@ public class Boss : MonoBehaviour
                 for (int i = 1; i <= nbBullet; i++)
                 {
                    
-                    Vector3 intialPosition = new Vector3(targetPosition.x + (Mathf.Cos(Mathf.PI * 2 / (nbBullet) * i) * 5), targetPosition.y + (Mathf.Sin(Mathf.PI * 2 / (nbBullet) * i) * 5), targetPosition.z);
+                    Vector3 intialPosition = new Vector3(targetPosition.x + (Mathf.Cos(Mathf.PI * 2 / (nbBullet) * i) * radius), targetPosition.y + (Mathf.Sin(Mathf.PI * 2 / (nbBullet) * i) * radius), targetPosition.z);
                     GameObject bullet = Instantiate(bulletPrefab, intialPosition, Quaternion.identity, transform);
                     bullet.GetComponent<Bullet>().TargetPosition = targetPosition;
+                    bullet.GetComponent<Bullet>().Speed = speed;
                 }
             }
             else
