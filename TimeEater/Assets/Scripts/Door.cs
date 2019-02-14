@@ -9,8 +9,8 @@ public class Door : MonoBehaviour
     [SerializeField] private GameObject player;
     */
 
-    [SerializeField] private Vector3 cameraTranslation = new Vector3(10, 0, -10);
-    [SerializeField] private Vector3 playerTranslation = new Vector3(3, 0, 0);
+    [SerializeField] private Transform cameraTranslation;
+    [SerializeField] private Transform playerTranslation;
 
 
 
@@ -28,8 +28,8 @@ public class Door : MonoBehaviour
  
     private void MoveRight()
     {
-       GameManager.Instance.Player.transform.position = GameManager.Instance.Player.transform.position + playerTranslation;
-       GameManager.Instance.Camera.transform.position = GameManager.Instance.Camera.transform.position + cameraTranslation;
+       GameManager.Instance.Player.transform.position = playerTranslation.position;
+       GameManager.Instance.Camera.transform.position = cameraTranslation.position;
 
     }
 }
