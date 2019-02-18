@@ -4,23 +4,44 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    [SerializeField] private bool fixe = false;
+    public bool Fixe
     {
-        
+        get { return fixe; }
+        set { fixe = value; }
     }
 
-    // Update is called once per frame
-    void Update()
+    private Rigidbody2D rigidbody2D;
+    private BoxCollider2D boxCollider2D;
+
+    
+    void Start()
     {
-        
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
+    }
+    
+    void FixedUpdate()
+    {
+        if (!rigidbody2D.IsTouching(GameManager.Instance.Player.GetComponent<BoxCollider2D>()))
+        {
+            rigidbody2D.isKinematic = true;
+            fixe = true;
+            rigidbody2D.velocity = Vector2.zero;
+        }
+        else
+        {
+            rigidbody2D.isKinematic = false;
+            fixe = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.GetComponent<Obstacle>())
         {
-
+            fixe = true;
         }
     }
 
@@ -28,7 +49,7 @@ public class Obstacle : MonoBehaviour
     {
         if (other.gameObject.GetComponent<Obstacle>())
         {
-
+            fixe = false;
         }
     }
 }

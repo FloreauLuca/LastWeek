@@ -94,4 +94,19 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1);
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
     }
+
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.GetComponent<Obstacle>())
+        {
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.GetComponent<Obstacle>())
+        {
+        }
+    }
 }
