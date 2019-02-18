@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public bool end;
     
     private Player player;  // permet d'avoir accès au player de n'importe où
-
     public Player Player
     {
         get { return player; }
@@ -19,11 +18,13 @@ public class GameManager : MonoBehaviour
     
 
     private CameraManager camera;
-
     public CameraManager Camera
     {
         get { return camera; }
     }
+
+    private Boss boss;
+    public bool bossMode;
 
     private void Awake()
     {
@@ -65,6 +66,8 @@ public class GameManager : MonoBehaviour
     void SetupScene() // initialise le niveau
     {
         player = GameObject.FindObjectOfType<Player>();
+        boss = GameObject.FindObjectOfType<Boss>();
+        boss.enabled = false;
         camera = GameObject.FindObjectOfType<CameraManager>();
         Time.timeScale = 1;
         end = false;
@@ -82,6 +85,12 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("Luca");
         }
+    }
+
+    public void LaunchBoss()
+    {
+        boss.enabled = true;
+        bossMode = true;
     }
 }
 
