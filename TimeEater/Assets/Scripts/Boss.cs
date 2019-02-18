@@ -11,11 +11,17 @@ public class Boss : MonoBehaviour
     [SerializeField] private float radius;
     [SerializeField] private float speed;
 
+    [SerializeField] private Transform cameraTranslation;
+    [SerializeField] private Transform playerTranslation;
+
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(SpawnBullet());
+
+        GameManager.Instance.Player.transform.position = playerTranslation.position;
+        GameManager.Instance.Camera.transform.position = cameraTranslation.position;
     }
 
     // Update is called once per frame

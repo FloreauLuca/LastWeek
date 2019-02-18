@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -13,9 +14,24 @@ public class Player : MonoBehaviour
 
     private Vector3 direction;
 
+    [SerializeField] private GameObject lifeText;
+    [SerializeField] private int life;
+
+    public int Life
+    {
+        get { return life; }
+        set
+        {
+            life = value;
+            lifeText.GetComponent<TextMeshProUGUI>().text = "Life : " + life;
+        }
+    }
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
+
+        lifeText.GetComponent<TextMeshProUGUI>().text = "Life : " + life;
     }
 
     private void Update()
@@ -55,12 +71,21 @@ public class Player : MonoBehaviour
         }
         */
         playerRb.velocity = direction;
+        if (GameManager.Instance.bossMode)
+        {
+            lifeText.SetActive(true);
 
+        }
+        else
+        {
+            lifeText.SetActive(false);
+        }
     }
 
     public void InvincibilityStart()
     {
         StartCoroutine(Invincibility());
+        Life -= 1;
     }
 
     public IEnumerator Invincibility()
