@@ -5,11 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerCheck
-  - Candle
   - Wall
-  - Paint
-  - Arrow
   - Rock
+  - Paint
   layers:
   - Default
   - TransparentFX
@@ -46,6 +44,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 129930445
     locked: 0
   - name: Player
     uniqueID: 3701838871

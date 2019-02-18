@@ -21,6 +21,7 @@ public class Hole : MonoBehaviour
         if (other.gameObject.CompareTag("Rock"))
         {
             other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            other.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             other.transform.position = transform.position;
             GetComponent<BoxCollider2D>().isTrigger = true;
         }
