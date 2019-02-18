@@ -34,7 +34,9 @@ public class Boss : MonoBehaviour
     {
         while (!dead)
         {
-            bool circle = Random.value > 0;
+
+            yield return new WaitForSeconds(5);
+            bool circle = Random.value > 0.5;
             if (circle)
             {
                 Vector3 targetPosition = GameManager.Instance.Player.transform.position;
@@ -45,23 +47,24 @@ public class Boss : MonoBehaviour
                     GameObject bullet = Instantiate(bulletPrefab, intialPosition, Quaternion.identity, transform);
                     bullet.GetComponent<Bullet>().TargetPosition = targetPosition;
                     bullet.GetComponent<Bullet>().Speed = speed;
+                    bullet.GetComponent<Bullet>().Circle = true;
                 }
             }
             else
             {
-                
+                Vector3 targetPosition = GameManager.Instance.Player.transform.position;
+                for (int i = 1; i <= nbBullet*2; i++)
+                {
+
+                    Vector3 intialPosition = new Vector3(transform.position.x, transform.position.y, targetPosition.z);
+                    GameObject bullet = Instantiate(bulletPrefab, intialPosition, Quaternion.identity, transform);
+                    bullet.GetComponent<Bullet>().TargetPosition = targetPosition;
+                    bullet.GetComponent<Bullet>().Circle = false;
+                    bullet.GetComponent<Bullet>().Speed = speed;
+                    yield return new WaitForSeconds(0.1f);
+                }
             }
 
-            yield return new WaitForSeconds(5);
-        }
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Arrow"))
-        {
-            Destroy(gameObject);
         }
     }
 }

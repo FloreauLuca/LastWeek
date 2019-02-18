@@ -27,6 +27,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private bool iced = false;
+    public bool Iced
+    {
+        get { return iced; }
+        set { iced = value; }
+    }
+
+    private bool invincible = false;
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
@@ -36,12 +45,21 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        
-        direction = (Vector3.up * Input.GetAxisRaw("Vertical") + Vector3.right * Input.GetAxisRaw("Horizontal")) *playerSpeed;
-        if (Input.GetButtonDown("Fire"))
+        if (!Iced || playerRb.velocity == Vector2.zero)
         {
-
+            if (Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical") < 0 ||
+                Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
+            {
+                direction =
+                    (Vector3.up * Input.GetAxisRaw("Vertical") + Vector3.right * Input.GetAxisRaw("Horizontal")) *
+                    playerSpeed;
+            }
+            else
+            {
+                direction = Vector3.zero;
+            }
         }
+
     }
 
     void FixedUpdate()
@@ -84,29 +102,21 @@ public class Player : MonoBehaviour
 
     public void InvincibilityStart()
     {
+        if (!invincible)
+        {
+            Life -= 1;
+        }
         StartCoroutine(Invincibility());
-        Life -= 1;
+        
     }
 
     public IEnumerator Invincibility()
     {
         GetComponentInChildren<SpriteRenderer>().color = Color.red;
+        invincible = true;
         yield return new WaitForSeconds(1);
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
+        invincible = false;
     }
-
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.GetComponent<Obstacle>())
-        {
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.GetComponent<Obstacle>())
-        {
-        }
-    }
+    
 }
