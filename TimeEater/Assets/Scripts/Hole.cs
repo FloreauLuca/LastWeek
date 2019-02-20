@@ -13,7 +13,11 @@ public class Hole : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (Input.GetButtonDown("Restart"))
+        {
+            Restart();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -25,5 +29,10 @@ public class Hole : MonoBehaviour
             other.transform.position = transform.position;
             GetComponent<BoxCollider2D>().isTrigger = true;
         }
+    }
+
+    void Restart()
+    {
+        GetComponent<BoxCollider2D>().isTrigger = false;
     }
 }

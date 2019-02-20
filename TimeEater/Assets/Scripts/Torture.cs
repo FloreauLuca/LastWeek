@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Torture : MonoBehaviour
 {
+    private bool tortured = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +20,10 @@ public class Torture : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         GetComponent<SpriteRenderer>().color = Color.red;
+        if (!tortured)
+        {
+            tortured = true;
+            GameManager.Instance.Victim++;
+        }
     }
 }

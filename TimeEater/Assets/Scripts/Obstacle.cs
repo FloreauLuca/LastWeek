@@ -12,27 +12,27 @@ public class Obstacle : MonoBehaviour
         set { fixe = value; }
     }
 
-    private Rigidbody2D rigidbody2D;
-    private BoxCollider2D boxCollider2D;
+    protected Rigidbody2D myrb2D;
+    protected BoxCollider2D myBoxCollider2D;
 
     
-    void Start()
+    protected void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
+        myrb2D = GetComponent<Rigidbody2D>();
+        myBoxCollider2D = GetComponent<BoxCollider2D>();
     }
-    
-    void FixedUpdate()
+
+    protected void FixedUpdate()
     {
-        if (!rigidbody2D.IsTouching(GameManager.Instance.Player.GetComponent<BoxCollider2D>()))
+        if (!myrb2D.IsTouching(GameManager.Instance.Player.GetComponent<BoxCollider2D>()))
         {
-            rigidbody2D.isKinematic = true;
+            myrb2D.isKinematic = true;
             fixe = true;
-            rigidbody2D.velocity = Vector2.zero;
+            myrb2D.velocity = Vector2.zero;
         }
         else
         {
-            rigidbody2D.isKinematic = false;
+            myrb2D.isKinematic = false;
             fixe = false;
         }
     }

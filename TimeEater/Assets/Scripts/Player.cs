@@ -17,6 +17,14 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject lifeText;
     [SerializeField] private int life;
 
+    private Vector3 startPosition;
+
+    public Vector3 StartPosition
+    {
+        get { return startPosition; }
+        set { startPosition = value; }
+    }
+
     public int Life
     {
         get { return life; }
@@ -41,6 +49,7 @@ public class Player : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
 
         lifeText.GetComponent<TextMeshProUGUI>().text = "Life : " + life;
+        startPosition = transform.position;
     }
 
     private void Update()
@@ -59,8 +68,17 @@ public class Player : MonoBehaviour
                 direction = Vector3.zero;
             }
         }
-
+        if (Input.GetButtonDown("Restart"))
+        {
+            Restart();
+        }
     }
+
+    void Restart()
+    {
+        transform.position = startPosition;
+    }
+
 
     void FixedUpdate()
     {       /*
