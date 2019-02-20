@@ -9,6 +9,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public bool end;
+    [SerializeField][Range(0, 5)] private int victim;
+    public int Victim
+    {
+        get { return victim; }
+        set { victim = value; }
+    }
     
     private Player player;  // permet d'avoir accès au player de n'importe où
     public Player Player
@@ -81,10 +87,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButton("Restart"))
-        {
-            SceneManager.LoadScene("Luca");
-        }
     }
 
     public void LaunchBoss()

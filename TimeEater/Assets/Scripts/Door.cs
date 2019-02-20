@@ -29,7 +29,9 @@ public class Door : MonoBehaviour
     private void MoveRight()
     {
        GameManager.Instance.Player.transform.position = playerTranslation.position;
-       GameManager.Instance.Camera.transform.position = cameraTranslation.position;
+        GameManager.Instance.Player.GetComponent<Player>().StartPosition = playerTranslation.position;
+
+        GameManager.Instance.Camera.transform.position = cameraTranslation.position;
 
     }
 }
