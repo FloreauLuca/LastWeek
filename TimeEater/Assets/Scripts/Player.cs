@@ -123,6 +123,10 @@ public class Player : MonoBehaviour
         if (!invincible)
         {
             Life -= 1;
+            if (life <= 0)
+            {
+                GameManager.Instance.GameOver();
+            }
         }
         StartCoroutine(Invincibility());
         

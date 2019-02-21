@@ -14,6 +14,8 @@ public class Boss : MonoBehaviour
     [SerializeField] private Transform cameraTranslation;
     [SerializeField] private Transform playerTranslation;
 
+    [SerializeField] private Incantation[] incantations;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +29,11 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (IncantationTest())
+        {
+            dead = true;
+            GameManager.Instance.Win();
+        }
     }
 
     private IEnumerator SpawnBullet()
@@ -66,5 +72,20 @@ public class Boss : MonoBehaviour
             }
 
         }
+    }
+
+    public bool IncantationTest()
+    {
+
+        foreach (var incantation in incantations)
+        {
+            if (!incantation.Filled)
+            {
+                return false;
+            }
+        }
+
+        return true;
+
     }
 }
