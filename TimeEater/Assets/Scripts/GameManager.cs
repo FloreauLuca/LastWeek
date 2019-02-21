@@ -73,15 +73,26 @@ public class GameManager : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<Player>();
         boss = GameObject.FindObjectOfType<Boss>();
-        boss.enabled = false;
+        if (boss)
+        {
+            boss.enabled = false;
+        }
+
         camera = GameObject.FindObjectOfType<CameraManager>();
         Time.timeScale = 1;
         end = false;
     }
 
-    public void End()
+    public void GameOver()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
+        SceneManager.LoadScene("Lose");
+        end = true;
+    }
+    public void Win()
+    {
+        //Time.timeScale = 0;
+        SceneManager.LoadScene("Win");
         end = true;
     }
 
