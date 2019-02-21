@@ -6,9 +6,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private bool casePercase = true;
+    [SerializeField] private LayerMask raycastLayerMask;
+
     [SerializeField] private float playerSpeed;
     
     private Rigidbody2D playerRb;
+    private BoxCollider2D box;
     private Animator animator;
     public bool mapMoving;
 
@@ -47,6 +51,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
+        box = GetComponent<BoxCollider2D>();
 
         lifeText.GetComponent<TextMeshProUGUI>().text = "Life : " + life;
         startPosition = transform.position;
@@ -54,23 +59,59 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (!Iced || playerRb.velocity == Vector2.zero)
+        if (casePercase)
         {
-            if (Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical") < 0 ||
-                Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
+            if (direction == Vector3.zero)
             {
-                direction =
-                    (Vector3.up * Input.GetAxisRaw("Vertical") + Vector3.right * Input.GetAxisRaw("Horizontal")) *
-                    playerSpeed;
+                if (Input.GetAxisRaw("Horizontal") != 0)
+                {
+                    direction = new Vector2(Input.GetAxisRaw("Horizontal") * transform.localScale.x, 0);
+                    Debug.Log(direction);
+                    if (DetectWall(direction))
+                    {
+                        direction = Vector2.zero;
+                    }
+                }
+                else if (Input.GetAxisRaw("Vertical") != 0)
+                {
+                    direction = new Vector2(0, Input.GetAxisRaw("Vertical") * transform.localScale.y);
+                    if (DetectWall(direction))
+                    {
+                        direction = Vector2.zero;
+                    }
+                }
+                else
+                {
+                    direction = Vector2.zero;
+                }
             }
             else
             {
                 direction = Vector3.zero;
             }
         }
-        if (Input.GetButtonDown("Restart"))
+        else
         {
-            Restart();
+
+            if (!Iced || playerRb.velocity == Vector2.zero)
+            {
+                if (Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical") < 0 ||
+                    Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
+                {
+                    direction =
+                        (Vector3.up * Input.GetAxisRaw("Vertical") + Vector3.right * Input.GetAxisRaw("Horizontal")) *
+                        playerSpeed;
+                }
+                else
+                {
+                    direction = Vector3.zero;
+                }
+            }
+
+            if (Input.GetButtonDown("Restart"))
+            {
+                Restart();
+            }
         }
     }
 
@@ -106,7 +147,15 @@ public class Player : MonoBehaviour
             playerRb.velocity = Vector2.zero;
         }
         */
-        playerRb.velocity = direction;
+        if (casePercase)
+        {
+            transform.position += direction;
+        }
+        else
+        {
+            playerRb.velocity = direction;
+
+        }
         if (GameManager.Instance.bossMode)
         {
             lifeText.SetActive(true);
@@ -140,5 +189,22 @@ public class Player : MonoBehaviour
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
         invincible = false;
     }
-    
+
+
+    public bool DetectWall(Vector2 orientation)
+    {
+
+        Collider2D collider = Physics2D.OverlapBox((Vector2)transform.position + orientation, box.size * transform.localScale, 0, raycastLayerMask);
+        Debug.Log((Vector2)transform.position + orientation);
+        Debug.Log(box.size * transform.localScale);
+        if (collider)
+        {
+            if (collider.GetComponent<Obstacle>())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
