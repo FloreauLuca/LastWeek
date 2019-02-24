@@ -16696,12 +16696,12 @@ PrefabInstance:
     - target: {fileID: 8860920806877811893, guid: 646f69478192ac04c9a2e07898965ac6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.05
+      value: 3.49
       objectReference: {fileID: 0}
     - target: {fileID: 8860920806877811893, guid: 646f69478192ac04c9a2e07898965ac6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.04
+      value: -10.56
       objectReference: {fileID: 0}
     - target: {fileID: 8860920806877811893, guid: 646f69478192ac04c9a2e07898965ac6,
         type: 3}
@@ -16771,12 +16771,22 @@ PrefabInstance:
     - target: {fileID: 8860920806877811890, guid: 646f69478192ac04c9a2e07898965ac6,
         type: 3}
       propertyPath: casePercase
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8860920806877811890, guid: 646f69478192ac04c9a2e07898965ac6,
         type: 3}
       propertyPath: raycastLayerMask.m_Bits
       value: 2048
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860920806877811890, guid: 646f69478192ac04c9a2e07898965ac6,
+        type: 3}
+      propertyPath: scale.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8860920806877811890, guid: 646f69478192ac04c9a2e07898965ac6,
+        type: 3}
+      propertyPath: scale.y
+      value: 0.605
       objectReference: {fileID: 0}
     - target: {fileID: 8860920806877811891, guid: 646f69478192ac04c9a2e07898965ac6,
         type: 3}

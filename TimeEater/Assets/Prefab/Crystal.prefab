@@ -94,6 +94,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fixe: 0
+  raycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &5166680911649841955
 GameObject:
   m_ObjectHideFlags: 0

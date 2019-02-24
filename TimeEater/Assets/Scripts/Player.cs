@@ -1,16 +1,27 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private bool casePercase = true;
+
+    public bool CasePercase
+    {
+        get { return casePercase; }
+        set { casePercase = value; }
+    }
+
+    
     [SerializeField] private LayerMask raycastLayerMask;
 
     [SerializeField] private float playerSpeed;
-    
+
+    [SerializeField] private Vector2 scale;
+
     private Rigidbody2D playerRb;
     private BoxCollider2D box;
     private Animator animator;
@@ -61,33 +72,53 @@ public class Player : MonoBehaviour
     {
         if (casePercase)
         {
-            if (direction == Vector3.zero)
+
+            if (!Iced || direction == Vector3.zero)
             {
-                if (Input.GetAxisRaw("Horizontal") != 0)
+
+                if (Input.GetButtonDown("Right"))
                 {
-                    direction = new Vector2(Input.GetAxisRaw("Horizontal") * transform.localScale.x, 0);
+                    direction = Vector3.right * scale;
                     Debug.Log(direction);
                     if (DetectWall(direction))
                     {
                         direction = Vector2.zero;
                     }
                 }
-                else if (Input.GetAxisRaw("Vertical") != 0)
+                else if (Input.GetButtonDown("Left"))
                 {
-                    direction = new Vector2(0, Input.GetAxisRaw("Vertical") * transform.localScale.y);
+                    direction = Vector3.left * scale;
+                    Debug.Log(direction);
                     if (DetectWall(direction))
                     {
                         direction = Vector2.zero;
                     }
                 }
-                else
+                else if (Input.GetButtonDown("Up"))
                 {
-                    direction = Vector2.zero;
+                    direction = Vector3.up * scale;
+                    Debug.Log(direction);
+                    if (DetectWall(direction))
+                    {
+                        direction = Vector2.zero;
+                    }
+                }
+                else if (Input.GetButtonDown("Down"))
+                {
+                    direction = Vector3.down * scale;
+                    Debug.Log(direction);
+                    if (DetectWall(direction))
+                    {
+                        direction = Vector2.zero;
+                    }
                 }
             }
             else
             {
-                direction = Vector3.zero;
+                if (DetectWall(direction))
+                {
+                    direction = Vector3.zero;
+                }
             }
         }
         else
@@ -108,10 +139,11 @@ public class Player : MonoBehaviour
                 }
             }
 
-            if (Input.GetButtonDown("Restart"))
-            {
-                Restart();
-            }
+        }
+
+        if (Input.GetButtonDown("Restart"))
+        {
+            Restart();
         }
     }
 
@@ -150,6 +182,10 @@ public class Player : MonoBehaviour
         if (casePercase)
         {
             transform.position += direction;
+            if (!Iced)
+            {
+                direction = Vector3.zero;
+            } 
         }
         else
         {
@@ -194,16 +230,37 @@ public class Player : MonoBehaviour
     public bool DetectWall(Vector2 orientation)
     {
 
-        Collider2D collider = Physics2D.OverlapBox((Vector2)transform.position + orientation, box.size * transform.localScale, 0, raycastLayerMask);
-        Debug.Log((Vector2)transform.position + orientation);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll((Vector2) transform.position + orientation,
+            box.size * transform.localScale, 0, raycastLayerMask);
+        Debug.Log((Vector2) transform.position + orientation);
         Debug.Log(box.size * transform.localScale);
+        Debug.Log(colliders);
+        foreach (var collider in colliders)
+        {
+            
         if (collider)
         {
-            if (collider.GetComponent<Obstacle>())
+            if (collider.GetComponent<Rock>())
+            {
+                Iced = false;
+                    return collider.GetComponent<Rock>().UnMovable(orientation);
+            }
+            else if (collider.GetComponent<Ice>())
+            {
+                Iced = true;
+                Debug.Log("Iced");
+                return false;
+            }
+            else
             {
                 return true;
             }
         }
+
+        }
+        Iced = false;
+        Debug.Log("UnIced");
+
         return false;
     }
 
