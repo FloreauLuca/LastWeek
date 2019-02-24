@@ -22,7 +22,10 @@ public class Ice : MonoBehaviour
     {
         if (other.CompareTag("PlayerCheck"))
         {
-            other.GetComponent<Player>().Iced = true;
+            if (!other.GetComponent<Player>().CasePercase)
+            {
+                other.GetComponent<Player>().Iced = true;
+            }
         }
     }
 
@@ -30,7 +33,10 @@ public class Ice : MonoBehaviour
     {
         if (other.CompareTag("PlayerCheck"))
         {
-            other.GetComponent<Player>().Iced = false;
+            if (!other.GetComponent<Player>().CasePercase)
+            {
+                other.GetComponent<Player>().Iced = false;
+            }
         }
     }
 }
