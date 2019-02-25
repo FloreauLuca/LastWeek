@@ -25,7 +25,6 @@ public class Player : MonoBehaviour
     private Rigidbody2D playerRb;
     private BoxCollider2D box;
     private Animator animator;
-    public bool mapMoving;
 
     private Vector3 direction;
 
@@ -79,7 +78,6 @@ public class Player : MonoBehaviour
                 if (Input.GetButtonDown("Right"))
                 {
                     direction = Vector3.right * scale;
-                    Debug.Log(direction);
                     if (DetectWall(direction))
                     {
                         direction = Vector2.zero;
@@ -88,7 +86,6 @@ public class Player : MonoBehaviour
                 else if (Input.GetButtonDown("Left"))
                 {
                     direction = Vector3.left * scale;
-                    Debug.Log(direction);
                     if (DetectWall(direction))
                     {
                         direction = Vector2.zero;
@@ -97,7 +94,6 @@ public class Player : MonoBehaviour
                 else if (Input.GetButtonDown("Up"))
                 {
                     direction = Vector3.up * scale;
-                    Debug.Log(direction);
                     if (DetectWall(direction))
                     {
                         direction = Vector2.zero;
@@ -106,14 +102,13 @@ public class Player : MonoBehaviour
                 else if (Input.GetButtonDown("Down"))
                 {
                     direction = Vector3.down * scale;
-                    Debug.Log(direction);
                     if (DetectWall(direction))
                     {
                         direction = Vector2.zero;
                     }
                 }
             }
-            else
+            else 
             {
                 if (DetectWall(direction))
                 {
@@ -126,12 +121,13 @@ public class Player : MonoBehaviour
 
             if (!Iced || playerRb.velocity == Vector2.zero)
             {
-                if (Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical") < 0 ||
-                    Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
+                if (Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical") < 0)
                 {
-                    direction =
-                        (Vector3.up * Input.GetAxisRaw("Vertical") + Vector3.right * Input.GetAxisRaw("Horizontal")) *
-                        playerSpeed;
+                    direction = (Vector3.up * Input.GetAxisRaw("Vertical")) * playerSpeed;
+                }
+                else if (Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
+                {
+                    direction = (Vector3.right * Input.GetAxisRaw("Horizontal")) * playerSpeed;
                 }
                 else
                 {
@@ -230,38 +226,35 @@ public class Player : MonoBehaviour
     public bool DetectWall(Vector2 orientation)
     {
 
-        Collider2D[] colliders = Physics2D.OverlapBoxAll((Vector2) transform.position + orientation,
-            box.size * transform.localScale, 0, raycastLayerMask);
-        Debug.Log((Vector2) transform.position + orientation);
-        Debug.Log(box.size * transform.localScale);
-        Debug.Log(colliders);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll((Vector2) transform.position + orientation, box.size * transform.localScale, 0, raycastLayerMask);
+        Debug.Log((Vector2)transform.position + orientation);
+        bool detectWall = false;
+        if (colliders.Length>0)
+        { 
         foreach (var collider in colliders)
         {
-            
-        if (collider)
-        {
+            Debug.Log(collider.gameObject);
+
             if (collider.GetComponent<Rock>())
             {
-                Iced = false;
-                    return collider.GetComponent<Rock>().UnMovable(orientation);
+                detectWall = collider.GetComponent<Rock>().UnMovable(orientation);
             }
             else if (collider.GetComponent<Ice>())
             {
                 Iced = true;
-                Debug.Log("Iced");
-                return false;
             }
             else
             {
-                return true;
+                detectWall = true;
             }
+
         }
 
         }
-        Iced = false;
-        Debug.Log("UnIced");
-
-        return false;
+        else
+        {
+            Iced = false;
+        }
+        return detectWall;
     }
-
 }
