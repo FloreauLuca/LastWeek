@@ -21,7 +21,7 @@ public class Hole : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    protected virtual void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Rock"))
         {
@@ -29,18 +29,19 @@ public class Hole : MonoBehaviour
         }
     }
 
-    public void Collision(GameObject other)
+    public virtual void Collision(GameObject other)
     {
         if (other.CompareTag("Rock"))
         {
             other.GetComponent<BoxCollider2D>().enabled = false;
+            other.GetComponent<Rock>().enabled = false;
             other.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             other.transform.position = transform.position;
             GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 
-    void Restart()
+    protected virtual void Restart()
     {
         GetComponent<BoxCollider2D>().enabled = true;
     }

@@ -15,6 +15,7 @@ public class Rock : Obstacle
     {
         base.Start();
         startPosition = transform.position;
+        GetComponent<Rigidbody2D>().isKinematic = true;
     }
 
     // Update is called once per frame
@@ -33,17 +34,33 @@ public class Rock : Obstacle
                 direction = Vector3.zero;
             }
         }
+
+        if (GameManager.Instance.Playermode)
+        {
+            GetComponent<Rigidbody2D>().isKinematic = true;
+        }
         else
         {
-            //direction = Vector3.zero;
+            GetComponent<Rigidbody2D>().isKinematic = false;
+
         }
+
+
     }
 
     private void FixedUpdate()
     {
         if (iced)
         {
-            transform.position += direction;
+            if (UnMovable(direction))
+            {
+                direction = Vector3.zero;
+            }
+            else
+            {
+                transform.position += direction;
+
+            }
         }
     }
 
@@ -60,46 +77,54 @@ public class Rock : Obstacle
     {
 
         Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position + orientation, myBoxCollider2D.size, 0, raycastLayerMask );
-        Debug.Log(colliders);
-        foreach (var collider in colliders)
+        bool detectWall = false;
+        if (colliders.Length > 0)
         {
-
-            if (collider.GetComponent<Obstacle>())
+            foreach (var collider in colliders)
             {
-                return true;
+                if (collider.GetComponent<Obstacle>())
+                {
+                    detectWall = true;
+                }
+                else if (collider.GetComponent<Hole>())
+                {
+                    collider.GetComponent<Hole>().Collision(gameObject);
+                    detectWall = false;
+                }
+                else if (collider.GetComponent<Ice>())
+                {
+                    direction = orientation;
+                    iced = true;
+                    //detectWall = true;
+                }
+                else
+                {
+                    detectWall = true;
+                }
             }
-            else if (collider.GetComponent<Hole>())
-            {
-                collider.GetComponent<Hole>().Collision(gameObject);
-                return false;
-            }
-            else if (collider.GetComponent<Ice>())
-            {
-                transform.position += orientation;
-                direction = orientation;
-                iced = true;
-                Debug.Log("Iced");
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        if (iced)
-        {
-            transform.position += orientation;
-            iced = false;
-            Debug.Log("UnIced");
-            return false;
         }
         else
         {
             transform.position += orientation;
-            Debug.Log("UnIced");
-            return false;
+            iced = false;
+        }
 
+        return detectWall;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("PlayerCheck"))
+        {
+            GetComponent<Rigidbody2D>().isKinematic = false;
         }
     }
 
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("PlayerCheck"))
+        {
+            GetComponent<Rigidbody2D>().isKinematic = true;
+        }
+    }
 }

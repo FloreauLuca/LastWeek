@@ -19,13 +19,14 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask raycastLayerMask;
 
     [SerializeField] private float playerSpeed;
+    private int timerspeed = 0;
+
 
     [SerializeField] private Vector2 scale;
 
     private Rigidbody2D playerRb;
     private BoxCollider2D box;
     private Animator animator;
-    public bool mapMoving;
 
     private Vector3 direction;
 
@@ -72,72 +73,80 @@ public class Player : MonoBehaviour
     {
         if (casePercase)
         {
+           
+                if (!Iced || direction == Vector3.zero)
+                {
 
-            if (!Iced || direction == Vector3.zero)
-            {
-
-                if (Input.GetButtonDown("Right"))
-                {
-                    direction = Vector3.right * scale;
-                    Debug.Log(direction);
-                    if (DetectWall(direction))
+                    if (Input.GetButtonDown("Right"))
                     {
-                        direction = Vector2.zero;
+                        direction = Vector3.right * scale;
+                        if (DetectWall(direction))
+                        {
+                            direction = Vector2.zero;
+                        }
                     }
-                }
-                else if (Input.GetButtonDown("Left"))
-                {
-                    direction = Vector3.left * scale;
-                    Debug.Log(direction);
-                    if (DetectWall(direction))
+                    else if (Input.GetButtonDown("Left"))
                     {
-                        direction = Vector2.zero;
+                        direction = Vector3.left * scale;
+                        if (DetectWall(direction))
+                        {
+                            direction = Vector2.zero;
+                        }
                     }
-                }
-                else if (Input.GetButtonDown("Up"))
-                {
-                    direction = Vector3.up * scale;
-                    Debug.Log(direction);
-                    if (DetectWall(direction))
+                    else if (Input.GetButtonDown("Up"))
                     {
-                        direction = Vector2.zero;
+                        direction = Vector3.up * scale;
+                        if (DetectWall(direction))
+                        {
+                            direction = Vector2.zero;
+                        }
                     }
-                }
-                else if (Input.GetButtonDown("Down"))
-                {
-                    direction = Vector3.down * scale;
-                    Debug.Log(direction);
-                    if (DetectWall(direction))
+                    else if (Input.GetButtonDown("Down"))
                     {
-                        direction = Vector2.zero;
+                        direction = Vector3.down * scale;
+                        if (DetectWall(direction))
+                        {
+                            direction = Vector2.zero;
+                        }
                     }
-                }
+                    
             }
-            else
-            {
-                if (DetectWall(direction))
+                else
                 {
-                    direction = Vector3.zero;
+                    if (DetectWall(direction))
+                    {
+                        direction = Vector3.zero;
+                    }
                 }
-            }
         }
         else
         {
 
             if (!Iced || playerRb.velocity == Vector2.zero)
             {
-                if (Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical") < 0 ||
-                    Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
+                if (Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical") < 0)
                 {
-                    direction =
-                        (Vector3.up * Input.GetAxisRaw("Vertical") + Vector3.right * Input.GetAxisRaw("Horizontal")) *
-                        playerSpeed;
+                    direction = (Vector3.up * Input.GetAxisRaw("Vertical")) * playerSpeed;
+                }
+                else if (Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
+                {
+                    direction = (Vector3.right * Input.GetAxisRaw("Horizontal")) * playerSpeed;
                 }
                 else
                 {
                     direction = Vector3.zero;
                 }
             }
+
+        }
+
+        if (GameManager.Instance.Playermode)
+        {
+            GetComponent<Rigidbody2D>().isKinematic = true;
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().isKinematic = false;
 
         }
 
@@ -179,19 +188,26 @@ public class Player : MonoBehaviour
             playerRb.velocity = Vector2.zero;
         }
         */
-        if (casePercase)
+        timerspeed++;
+        if (timerspeed >= playerSpeed)
         {
-            transform.position += direction;
-            if (!Iced)
-            {
-                direction = Vector3.zero;
-            } 
-        }
-        else
-        {
-            playerRb.velocity = direction;
+            timerspeed = 0;
 
+            if (casePercase)
+            {
+                transform.position += direction;
+                if (!Iced)
+                {
+                    direction = Vector3.zero;
+                }
+            }
+            else
+            {
+                playerRb.velocity = direction;
+
+            }
         }
+
         if (GameManager.Instance.bossMode)
         {
             lifeText.SetActive(true);
@@ -230,38 +246,45 @@ public class Player : MonoBehaviour
     public bool DetectWall(Vector2 orientation)
     {
 
-        Collider2D[] colliders = Physics2D.OverlapBoxAll((Vector2) transform.position + orientation,
-            box.size * transform.localScale, 0, raycastLayerMask);
-        Debug.Log((Vector2) transform.position + orientation);
-        Debug.Log(box.size * transform.localScale);
-        Debug.Log(colliders);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll((Vector2) transform.position + orientation, box.size * transform.localScale, 0, raycastLayerMask);
+        Debug.Log((Vector2)transform.position + orientation);
+        bool detectWall = false;
+        if (colliders.Length>0)
+        { 
         foreach (var collider in colliders)
         {
-            
-        if (collider)
-        {
+            Debug.Log(collider.gameObject);
+
             if (collider.GetComponent<Rock>())
             {
-                Iced = false;
-                    return collider.GetComponent<Rock>().UnMovable(orientation);
+                detectWall = collider.GetComponent<Rock>().UnMovable(orientation);
             }
             else if (collider.GetComponent<Ice>())
             {
                 Iced = true;
-                Debug.Log("Iced");
-                return false;
             }
-            else
+            else if (collider.GetComponent<BoxCollider2D>())
             {
-                return true;
+                if (collider.GetComponent<BoxCollider2D>().isTrigger)
+                {
+                    detectWall = false;
+                }
+                else
+                {
+                    detectWall = true;
+                }
+            } else
+            {
+                detectWall = true;
             }
+
         }
 
         }
-        Iced = false;
-        Debug.Log("UnIced");
-
-        return false;
+        else
+        {
+            Iced = false;
+        }
+        return detectWall;
     }
-
 }

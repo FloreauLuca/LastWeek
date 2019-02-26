@@ -15,20 +15,37 @@ public class Boss : MonoBehaviour
     [SerializeField] private Transform playerTranslation;
 
     [SerializeField] private Incantation[] incantations;
+    [SerializeField] private Torture[] prisoniers;
+    [SerializeField] private Door door;
 
+    private bool startBoss = false;
 
+    public bool StartBoss
+    {
+        get { return startBoss; }
+        set
+        {
+            startBoss = value;
+            if (startBoss)
+            {
+
+                StartCoroutine(SpawnBullet());
+            }
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnBullet());
-
-        GameManager.Instance.Player.transform.position = playerTranslation.position;
-        GameManager.Instance.Camera.transform.position = cameraTranslation.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (door.Closed && VictimeTest())
+        {
+            door.Closed = false;
+        }
+
         if (IncantationTest())
         {
             dead = true;
@@ -87,5 +104,16 @@ public class Boss : MonoBehaviour
 
         return true;
 
+    }
+    public bool VictimeTest()
+    {
+        foreach (var prisonier in prisoniers)
+        {
+            if (!prisonier.Tortured)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
