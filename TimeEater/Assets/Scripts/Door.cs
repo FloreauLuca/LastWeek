@@ -7,6 +7,7 @@ public class Door : MonoBehaviour
 {
     [SerializeField] private Transform cameraTranslation;
     [SerializeField] private Transform playerTranslation;
+    [SerializeField] private Location newPlayerLocation;
 
     [SerializeField] private bool closed;
 
@@ -59,8 +60,10 @@ public class Door : MonoBehaviour
     { 
         playerTranslation.position = new Vector3(Convert.ToSingle(Math.Round(playerTranslation.position.x - 0.5f) + 0.5f), Convert.ToSingle(Math.Round(playerTranslation.position.y - 0.5f) + 0.5f), 0);
         GameManager.Instance.Player.transform.position = playerTranslation.position;
-        GameManager.Instance.Player.GetComponent<Player>().StartPosition = playerTranslation.position;
+        GameManager.Instance.Player.StartPosition = playerTranslation.position;
         GameManager.Instance.Camera.transform.position = cameraTranslation.position;
+        GameManager.Instance.Player.PlayerLocation = newPlayerLocation;
+
 
     }
 }

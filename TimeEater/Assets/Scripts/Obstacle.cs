@@ -5,6 +5,7 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
 
+
     [SerializeField] private bool fixe = false;
     public bool Fixe
     {

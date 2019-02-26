@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum Location
+{
+    ROOM0,
+    ROOM1,
+    ROOMGLACE1,
+    ROOMGLACE2,
+    ROOMBLOC1,
+    ROOMBLOC2,
+    ROOMBOSS
+}
+
 public class GameManager : MonoBehaviour
 {
 

@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Rock : Obstacle
 {
+    [SerializeField] public Location myLocation;
+
     private Vector3 startPosition;
     [SerializeField] private LayerMask raycastLayerMask;
 
     private bool iced = false;
     private Vector3 direction;
+
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -16,13 +20,14 @@ public class Rock : Obstacle
         base.Start();
         startPosition = transform.position;
         GetComponent<Rigidbody2D>().isKinematic = true;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Input.GetButtonDown("Restart"))
+        if (Input.GetButtonDown("Restart") && GameManager.Instance.Player.PlayerLocation == myLocation)
         {
             Restart();
         }
@@ -61,6 +66,13 @@ public class Rock : Obstacle
                 transform.position += direction;
 
             }
+        }
+
+        if (GetComponent<Rigidbody2D>().velocity != Vector2.zero)
+        {
+
+            animator.SetFloat("XMove", GetComponent<Rigidbody2D>().velocity.x);
+            animator.SetFloat("YMove", GetComponent<Rigidbody2D>().velocity.y);
         }
     }
 
@@ -106,6 +118,8 @@ public class Rock : Obstacle
         else
         {
             transform.position += orientation;
+            animator.SetFloat("XMove", orientation.x);
+            animator.SetFloat("YMove", orientation.y);
             iced = false;
         }
 

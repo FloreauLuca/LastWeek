@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Torture : MonoBehaviour
 {
+    [SerializeField] public Location myLocation;
+
     private bool tortured = false;
 
     public bool Tortured
@@ -19,7 +21,11 @@ public class Torture : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (Input.GetButtonDown("Restart") && GameManager.Instance.Player.PlayerLocation == myLocation)
+        {
+            Restart();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -29,6 +35,16 @@ public class Torture : MonoBehaviour
         {
             tortured = true;
             GameManager.Instance.Victim++;
+        }
+    }
+
+    void Restart()
+    {
+        GetComponentInChildren<SpriteRenderer>().color = Color.white;
+        if (tortured)
+        {
+            tortured = false;
+            GameManager.Instance.Victim--;
         }
     }
 }
