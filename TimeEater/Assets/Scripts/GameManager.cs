@@ -29,6 +29,14 @@ public class GameManager : MonoBehaviour
         get { return camera; }
     }
 
+    [SerializeField] private bool playermode;
+
+    public bool Playermode
+    {
+        get { return playermode; }
+        set { playermode = value; }
+    }
+
     private Boss boss;
     public bool bossMode;
 
@@ -72,12 +80,18 @@ public class GameManager : MonoBehaviour
     void SetupScene() // initialise le niveau
     {
         player = GameObject.FindObjectOfType<Player>();
-        boss = GameObject.FindObjectOfType<Boss>();
-        if (boss)
+        if (player)
         {
-            boss.enabled = false;
+            if (playermode)
+            {
+                player.CasePercase = true;
+            }
+            else
+            {
+                player.CasePercase = false;
+            }
         }
-
+        boss = GameObject.FindObjectOfType<Boss>();
         camera = GameObject.FindObjectOfType<CameraManager>();
         Time.timeScale = 1;
         end = false;
@@ -89,6 +103,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Lose");
         end = true;
     }
+
     public void Win()
     {
         //Time.timeScale = 0;
@@ -96,13 +111,9 @@ public class GameManager : MonoBehaviour
         end = true;
     }
 
-    private void Update()
-    {
-    }
-
     public void LaunchBoss()
     {
-        boss.enabled = true;
+        boss.StartBoss = true;
         bossMode = true;
     }
 }

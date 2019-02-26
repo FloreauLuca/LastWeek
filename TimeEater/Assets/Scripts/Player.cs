@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask raycastLayerMask;
 
     [SerializeField] private float playerSpeed;
+    private int timerspeed = 0;
+
 
     [SerializeField] private Vector2 scale;
 
@@ -71,50 +73,51 @@ public class Player : MonoBehaviour
     {
         if (casePercase)
         {
+           
+                if (!Iced || direction == Vector3.zero)
+                {
 
-            if (!Iced || direction == Vector3.zero)
-            {
-
-                if (Input.GetButtonDown("Right"))
-                {
-                    direction = Vector3.right * scale;
-                    if (DetectWall(direction))
+                    if (Input.GetButtonDown("Right"))
                     {
-                        direction = Vector2.zero;
+                        direction = Vector3.right * scale;
+                        if (DetectWall(direction))
+                        {
+                            direction = Vector2.zero;
+                        }
                     }
-                }
-                else if (Input.GetButtonDown("Left"))
-                {
-                    direction = Vector3.left * scale;
-                    if (DetectWall(direction))
+                    else if (Input.GetButtonDown("Left"))
                     {
-                        direction = Vector2.zero;
+                        direction = Vector3.left * scale;
+                        if (DetectWall(direction))
+                        {
+                            direction = Vector2.zero;
+                        }
                     }
-                }
-                else if (Input.GetButtonDown("Up"))
-                {
-                    direction = Vector3.up * scale;
-                    if (DetectWall(direction))
+                    else if (Input.GetButtonDown("Up"))
                     {
-                        direction = Vector2.zero;
+                        direction = Vector3.up * scale;
+                        if (DetectWall(direction))
+                        {
+                            direction = Vector2.zero;
+                        }
                     }
-                }
-                else if (Input.GetButtonDown("Down"))
-                {
-                    direction = Vector3.down * scale;
-                    if (DetectWall(direction))
+                    else if (Input.GetButtonDown("Down"))
                     {
-                        direction = Vector2.zero;
+                        direction = Vector3.down * scale;
+                        if (DetectWall(direction))
+                        {
+                            direction = Vector2.zero;
+                        }
                     }
-                }
+                    
             }
-            else 
-            {
-                if (DetectWall(direction))
+                else
                 {
-                    direction = Vector3.zero;
+                    if (DetectWall(direction))
+                    {
+                        direction = Vector3.zero;
+                    }
                 }
-            }
         }
         else
         {
@@ -134,6 +137,16 @@ public class Player : MonoBehaviour
                     direction = Vector3.zero;
                 }
             }
+
+        }
+
+        if (GameManager.Instance.Playermode)
+        {
+            GetComponent<Rigidbody2D>().isKinematic = true;
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().isKinematic = false;
 
         }
 
@@ -175,19 +188,26 @@ public class Player : MonoBehaviour
             playerRb.velocity = Vector2.zero;
         }
         */
-        if (casePercase)
+        timerspeed++;
+        if (timerspeed >= playerSpeed)
         {
-            transform.position += direction;
-            if (!Iced)
-            {
-                direction = Vector3.zero;
-            } 
-        }
-        else
-        {
-            playerRb.velocity = direction;
+            timerspeed = 0;
 
+            if (casePercase)
+            {
+                transform.position += direction;
+                if (!Iced)
+                {
+                    direction = Vector3.zero;
+                }
+            }
+            else
+            {
+                playerRb.velocity = direction;
+
+            }
         }
+
         if (GameManager.Instance.bossMode)
         {
             lifeText.SetActive(true);
@@ -243,7 +263,17 @@ public class Player : MonoBehaviour
             {
                 Iced = true;
             }
-            else
+            else if (collider.GetComponent<BoxCollider2D>())
+            {
+                if (collider.GetComponent<BoxCollider2D>().isTrigger)
+                {
+                    detectWall = false;
+                }
+                else
+                {
+                    detectWall = true;
+                }
+            } else
             {
                 detectWall = true;
             }

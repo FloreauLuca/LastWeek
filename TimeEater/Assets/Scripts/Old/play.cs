@@ -9,7 +9,7 @@ public class play : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("LucaTest");
     }
     public void Quit()
     {

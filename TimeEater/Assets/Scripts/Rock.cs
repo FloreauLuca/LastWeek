@@ -35,7 +35,17 @@ public class Rock : Obstacle
             }
         }
 
-        
+        if (GameManager.Instance.Playermode)
+        {
+            GetComponent<Rigidbody2D>().isKinematic = true;
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().isKinematic = false;
+
+        }
+
+
     }
 
     private void FixedUpdate()
@@ -95,6 +105,7 @@ public class Rock : Obstacle
         }
         else
         {
+            transform.position += orientation;
             iced = false;
         }
 

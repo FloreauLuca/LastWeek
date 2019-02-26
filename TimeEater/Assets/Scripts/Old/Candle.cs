@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using TMPro.EditorUtilities;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class Candle : MonoBehaviour

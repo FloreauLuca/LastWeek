@@ -47,7 +47,7 @@ public class Door : MonoBehaviour
 
 
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "PlayerCheck")
         {
@@ -55,7 +55,7 @@ public class Door : MonoBehaviour
         }
     }
  
-    private void ChangeRoom()
+    protected virtual void ChangeRoom()
     { 
         playerTranslation.position = new Vector3(Convert.ToSingle(Math.Round(playerTranslation.position.x - 0.5f) + 0.5f), Convert.ToSingle(Math.Round(playerTranslation.position.y - 0.5f) + 0.5f), 0);
         GameManager.Instance.Player.transform.position = playerTranslation.position;
