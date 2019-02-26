@@ -32,14 +32,6 @@ public class Rock : Obstacle
             Restart();
         }
 
-        if (iced)
-        {
-            if (UnMovable(direction))
-            {
-                direction = Vector3.zero;
-            }
-        }
-
         if (GameManager.Instance.Playermode)
         {
             GetComponent<Rigidbody2D>().isKinematic = true;
@@ -64,8 +56,14 @@ public class Rock : Obstacle
             else
             {
                 transform.position += direction;
-
             }
+        }
+        else
+        {
+            direction = Vector3.zero;
+            animator.SetFloat("XMove", direction.x);
+            animator.SetFloat("YMove", direction.y);
+
         }
 
         if (GetComponent<Rigidbody2D>().velocity != Vector2.zero)
@@ -122,7 +120,6 @@ public class Rock : Obstacle
             animator.SetFloat("YMove", orientation.y);
             iced = false;
         }
-
         return detectWall;
     }
 

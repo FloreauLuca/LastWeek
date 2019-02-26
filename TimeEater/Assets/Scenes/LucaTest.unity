@@ -1756,7 +1756,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   end: 0
   victim: 0
-  playermode: 0
+  playermode: 1
   bossMode: 0
 --- !u!4 &295625112
 Transform:
@@ -12276,7 +12276,7 @@ PrefabInstance:
     - target: {fileID: 8860920806877811890, guid: 646f69478192ac04c9a2e07898965ac6,
         type: 3}
       propertyPath: casePercase
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8860920806877811890, guid: 646f69478192ac04c9a2e07898965ac6,
         type: 3}

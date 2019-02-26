@@ -224,8 +224,13 @@ public class Player : MonoBehaviour
 
                     animator.SetBool("Walk", true);
                 }
+                else
+                    {
+                        animator.SetBool("Walk", false);
 
-                transform.position += direction;
+                    }
+
+                    transform.position += direction;
                     if (!Iced)
                     {
                         direction = Vector3.zero;
@@ -239,6 +244,11 @@ public class Player : MonoBehaviour
                 {
 
                     animator.SetBool("Walk", true);
+                }
+                else
+                {
+                    animator.SetBool("Walk", false);
+
                 }
 
             }
