@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Hole : MonoBehaviour
 {
-
+    [SerializeField] public Location myLocation;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +15,7 @@ public class Hole : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetButtonDown("Restart"))
+        if (Input.GetButtonDown("Restart") && GameManager.Instance.Player.PlayerLocation == myLocation)
         {
             Restart();
         }

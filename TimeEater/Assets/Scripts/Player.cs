@@ -7,6 +7,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private Location playerLocation = Location.ROOM0;
+
+    public Location PlayerLocation
+    {
+        get { return playerLocation; }
+        set { playerLocation = value; }
+    }
+
+    
+
     [SerializeField] private bool casePercase = true;
 
     public bool CasePercase
@@ -64,6 +74,7 @@ public class Player : MonoBehaviour
     {
         playerRb = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
+        animator = GetComponent<Animator>();
 
         lifeText.GetComponent<TextMeshProUGUI>().text = "Life : " + life;
         startPosition = transform.position;
@@ -80,6 +91,7 @@ public class Player : MonoBehaviour
                     if (Input.GetButtonDown("Right"))
                     {
                         direction = Vector3.right * scale;
+                        animator.SetInteger("Move", 2);
                         if (DetectWall(direction))
                         {
                             direction = Vector2.zero;
@@ -88,7 +100,9 @@ public class Player : MonoBehaviour
                     else if (Input.GetButtonDown("Left"))
                     {
                         direction = Vector3.left * scale;
-                        if (DetectWall(direction))
+                        animator.SetInteger("Move", 4);
+
+                    if (DetectWall(direction))
                         {
                             direction = Vector2.zero;
                         }
@@ -96,7 +110,9 @@ public class Player : MonoBehaviour
                     else if (Input.GetButtonDown("Up"))
                     {
                         direction = Vector3.up * scale;
-                        if (DetectWall(direction))
+                        animator.SetInteger("Move", 1);
+
+                    if (DetectWall(direction))
                         {
                             direction = Vector2.zero;
                         }
@@ -104,7 +120,9 @@ public class Player : MonoBehaviour
                     else if (Input.GetButtonDown("Down"))
                     {
                         direction = Vector3.down * scale;
-                        if (DetectWall(direction))
+                        animator.SetInteger("Move", 3);
+
+                    if (DetectWall(direction))
                         {
                             direction = Vector2.zero;
                         }
@@ -127,14 +145,20 @@ public class Player : MonoBehaviour
                 if (Input.GetAxisRaw("Vertical") > 0 || Input.GetAxisRaw("Vertical") < 0)
                 {
                     direction = (Vector3.up * Input.GetAxisRaw("Vertical")) * playerSpeed;
+                    animator.SetInteger("Move", 2 - Math.Sign(Input.GetAxisRaw("Vertical")));
+
                 }
                 else if (Input.GetAxisRaw("Horizontal") > 0 || Input.GetAxisRaw("Horizontal") < 0)
                 {
                     direction = (Vector3.right * Input.GetAxisRaw("Horizontal")) * playerSpeed;
+
+                    animator.SetInteger("Move", 3 - Math.Sign(Input.GetAxisRaw("Horizontal")));
                 }
                 else
                 {
                     direction = Vector3.zero;
+
+                    animator.SetInteger("Move",0);
                 }
             }
 
@@ -195,15 +219,37 @@ public class Player : MonoBehaviour
 
             if (casePercase)
             {
-                transform.position += direction;
-                if (!Iced)
+                if (direction != Vector3.zero)
                 {
-                    direction = Vector3.zero;
+
+                    animator.SetBool("Walk", true);
                 }
+                else
+                    {
+                        animator.SetBool("Walk", false);
+
+                    }
+
+                    transform.position += direction;
+                    if (!Iced)
+                    {
+                        direction = Vector3.zero;
+                    }
             }
             else
             {
                 playerRb.velocity = direction;
+
+                if (direction != Vector3.zero)
+                {
+
+                    animator.SetBool("Walk", true);
+                }
+                else
+                {
+                    animator.SetBool("Walk", false);
+
+                }
 
             }
         }
