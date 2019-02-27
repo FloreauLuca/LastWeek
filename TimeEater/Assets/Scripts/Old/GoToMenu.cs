@@ -13,7 +13,7 @@ public class GoToMenu : MonoBehaviour
         }
         public void LoadGame()
         {
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("LucaTest");
         }
         public void QuitGame()
         {

@@ -11,24 +11,55 @@ public class Boss : MonoBehaviour
     [SerializeField] private float radius;
     [SerializeField] private float speed;
 
+    [SerializeField] private Transform cameraTranslation;
+    [SerializeField] private Transform playerTranslation;
 
+    [SerializeField] private Incantation[] incantations;
+    [SerializeField] private Torture[] prisoniers;
+    [SerializeField] private Door door;
+
+    private bool startBoss = false;
+
+    public bool StartBoss
+    {
+        get { return startBoss; }
+        set
+        {
+            startBoss = value;
+            if (startBoss)
+            {
+
+                StartCoroutine(SpawnBullet());
+            }
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnBullet());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (door.Closed && VictimeTest())
+        {
+            door.Closed = false;
+        }
+
+        if (IncantationTest())
+        {
+            dead = true;
+            GameManager.Instance.Win();
+        }
     }
 
     private IEnumerator SpawnBullet()
     {
         while (!dead)
         {
-            bool circle = Random.value > 0;
+
+            yield return new WaitForSeconds(5);
+            bool circle = Random.value > 0.5;
             if (circle)
             {
                 Vector3 targetPosition = GameManager.Instance.Player.transform.position;
@@ -39,23 +70,50 @@ public class Boss : MonoBehaviour
                     GameObject bullet = Instantiate(bulletPrefab, intialPosition, Quaternion.identity, transform);
                     bullet.GetComponent<Bullet>().TargetPosition = targetPosition;
                     bullet.GetComponent<Bullet>().Speed = speed;
+                    bullet.GetComponent<Bullet>().Circle = true;
                 }
             }
             else
             {
-                
+                Vector3 targetPosition = GameManager.Instance.Player.transform.position;
+                for (int i = 1; i <= nbBullet*2; i++)
+                {
+
+                    Vector3 intialPosition = new Vector3(transform.position.x, transform.position.y, targetPosition.z);
+                    GameObject bullet = Instantiate(bulletPrefab, intialPosition, Quaternion.identity, transform);
+                    bullet.GetComponent<Bullet>().TargetPosition = targetPosition;
+                    bullet.GetComponent<Bullet>().Circle = false;
+                    bullet.GetComponent<Bullet>().Speed = speed;
+                    yield return new WaitForSeconds(0.1f);
+                }
             }
 
-            yield return new WaitForSeconds(5);
         }
     }
 
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public bool IncantationTest()
     {
-        if (other.CompareTag("Arrow"))
+
+        foreach (var incantation in incantations)
         {
-            Destroy(gameObject);
+            if (!incantation.Filled)
+            {
+                return false;
+            }
         }
+
+        return true;
+
+    }
+    public bool VictimeTest()
+    {
+        foreach (var prisonier in prisoniers)
+        {
+            if (!prisonier.Tortured)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

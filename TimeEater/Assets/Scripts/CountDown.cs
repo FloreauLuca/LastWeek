@@ -35,7 +35,9 @@ public class CountDown : MonoBehaviour
 
         if (timer <= 0.0f)
         {
-            //SceneManager.LoadScene("Lose");
+            GameManager.Instance.LaunchBoss();
+            gameObject.SetActive(false);
+            enabled = false;
         }
     }
 }

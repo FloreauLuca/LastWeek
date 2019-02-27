@@ -22,7 +22,15 @@ public class Bullet : MonoBehaviour
         set { speed = value; }
     }
 
-    
+    [SerializeField] private bool circle;
+
+    public bool Circle
+    {
+        get { return circle; }
+        set { circle = value; }
+    }
+
+
     [SerializeField] private float timeBeforeDestroy;
 
 
@@ -41,11 +49,14 @@ public class Bullet : MonoBehaviour
     {
         if (Vector3.Distance(targetPosition, transform.position) <= 0.1)
         {
-            Destroy(gameObject);
+            if (circle)
+            {
+                Destroy(gameObject);
+            }
         }
         else
         {
-            rigidbody2D.velocity = (targetPosition - initialPosition) * speed;
+            rigidbody2D.velocity = Vector3.Normalize(targetPosition - initialPosition) * speed;
         }
 
         if (timeBeforeDestroy <= 0)
