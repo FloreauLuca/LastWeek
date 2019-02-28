@@ -52,7 +52,7 @@ public class Door : MonoBehaviour
     {
         if (collision.tag == "PlayerCheck")
         {
-            GameManager.Instance.Player.Iced = false;
+            GameManager.Instance.Player.Door = true;
             if (!GameManager.Instance.Player.IsMoving)
             {
                 ChangeRoom();
@@ -67,6 +67,7 @@ public class Door : MonoBehaviour
         GameManager.Instance.Player.StartPosition = playerTranslation.position;
         GameManager.Instance.Camera.transform.position = cameraTranslation.position;
         GameManager.Instance.Player.PlayerLocation = newPlayerLocation;
+        GameManager.Instance.Player.Door = false;
 
 
     }

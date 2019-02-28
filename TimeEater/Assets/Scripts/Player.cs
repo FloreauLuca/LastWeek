@@ -32,6 +32,16 @@ public class Player : MonoBehaviour
         get { return isMoving; }
     }
 
+    private bool door;
+
+    public bool Door
+    {
+        get { return door; }
+        set { door = value; }
+    }
+
+    
+
     
     
     [SerializeField] private LayerMask raycastLayerMask;
@@ -241,7 +251,7 @@ public class Player : MonoBehaviour
 
                 if (direction != Vector3.zero && !isMoving)
                 {
-                    StartCoroutine( Move(transform.position + direction));
+                    StartCoroutine(Move(transform.position + direction));
                 }
                  
                 if (!Iced)
@@ -345,7 +355,7 @@ public class Player : MonoBehaviour
         }
         return detectWall;
     }
-
+    
     public IEnumerator Move(Vector3 end)
     {
         Vector3 start = transform.position;
@@ -353,10 +363,13 @@ public class Player : MonoBehaviour
         for (float i = 0; i <= 100; i += playerSpeed)
         {
             transform.position = Vector3.Lerp(start, end, i / 100);
-            Debug.Log(transform.position);
+            if (door)
+            {
+                continue;
+            }
             yield return null;
         }
-
+        
         transform.position = end;
         isMoving = false;
 
