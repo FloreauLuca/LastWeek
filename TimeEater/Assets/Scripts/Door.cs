@@ -48,11 +48,15 @@ public class Door : MonoBehaviour
 
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "PlayerCheck")
         {
-            ChangeRoom();
+            GameManager.Instance.Player.Door = true;
+            if (!GameManager.Instance.Player.IsMoving)
+            {
+                ChangeRoom();
+            }
         }
     }
  
@@ -63,6 +67,7 @@ public class Door : MonoBehaviour
         GameManager.Instance.Player.StartPosition = playerTranslation.position;
         GameManager.Instance.Camera.transform.position = cameraTranslation.position;
         GameManager.Instance.Player.PlayerLocation = newPlayerLocation;
+        GameManager.Instance.Player.Door = false;
 
 
     }
