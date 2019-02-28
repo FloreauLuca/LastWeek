@@ -25,6 +25,24 @@ public class Player : MonoBehaviour
         set { casePercase = value; }
     }
 
+    private bool isMoving = false;
+
+    public bool IsMoving
+    {
+        get { return isMoving; }
+    }
+
+    private bool door;
+
+    public bool Door
+    {
+        get { return door; }
+        set { door = value; }
+    }
+
+    
+
+    
     
     [SerializeField] private LayerMask raycastLayerMask;
 
@@ -88,7 +106,7 @@ public class Player : MonoBehaviour
                 if (!Iced || direction == Vector3.zero)
                 {
 
-                    if (Input.GetButtonDown("Right"))
+                    if (Input.GetButton("Right") && !isMoving)
                     {
                         direction = Vector3.right * scale;
                         animator.SetInteger("Move", 2);
@@ -96,8 +114,9 @@ public class Player : MonoBehaviour
                         {
                             direction = Vector2.zero;
                         }
+                        
                     }
-                    else if (Input.GetButtonDown("Left"))
+                    else if (Input.GetButton("Left") && !isMoving)
                     {
                         direction = Vector3.left * scale;
                         animator.SetInteger("Move", 4);
@@ -107,7 +126,7 @@ public class Player : MonoBehaviour
                             direction = Vector2.zero;
                         }
                     }
-                    else if (Input.GetButtonDown("Up"))
+                    else if (Input.GetButton("Up") && !isMoving)
                     {
                         direction = Vector3.up * scale;
                         animator.SetInteger("Move", 1);
@@ -117,7 +136,7 @@ public class Player : MonoBehaviour
                             direction = Vector2.zero;
                         }
                     }
-                    else if (Input.GetButtonDown("Down"))
+                    else if (Input.GetButton("Down") && !isMoving)
                     {
                         direction = Vector3.down * scale;
                         animator.SetInteger("Move", 3);
@@ -214,27 +233,31 @@ public class Player : MonoBehaviour
         */
         timerspeed++;
         if (timerspeed >= playerSpeed)
-        {
-            timerspeed = 0;
+        { 
+            //timerspeed = 0;
 
             if (casePercase)
             {
-                if (direction != Vector3.zero)
+                if (direction != Vector3.zero && !iced)
                 {
 
                     animator.SetBool("Walk", true);
                 }
                 else
-                    {
-                        animator.SetBool("Walk", false);
+                {
+                    animator.SetBool("Walk", false);
 
-                    }
+                }
 
-                    transform.position += direction;
-                    if (!Iced)
-                    {
-                        direction = Vector3.zero;
-                    }
+                if (direction != Vector3.zero && !isMoving)
+                {
+                    StartCoroutine(Move(transform.position + direction));
+                }
+                 
+                if (!Iced)
+                {
+                    direction = Vector3.zero;
+                }
             }
             else
             {
@@ -293,7 +316,6 @@ public class Player : MonoBehaviour
     {
 
         Collider2D[] colliders = Physics2D.OverlapBoxAll((Vector2) transform.position + orientation, box.size * transform.localScale, 0, raycastLayerMask);
-        Debug.Log((Vector2)transform.position + orientation);
         bool detectWall = false;
         if (colliders.Length>0)
         { 
@@ -333,4 +355,25 @@ public class Player : MonoBehaviour
         }
         return detectWall;
     }
+    
+    public IEnumerator Move(Vector3 end)
+    {
+        Vector3 start = transform.position;
+        isMoving = true;
+        for (float i = 0; i <= 100; i += playerSpeed)
+        {
+            transform.position = Vector3.Lerp(start, end, i / 100);
+            if (door)
+            {
+                continue;
+            }
+            yield return null;
+        }
+        
+        transform.position = end;
+        isMoving = false;
+
+    }
+
+
 }
