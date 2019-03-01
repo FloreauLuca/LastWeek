@@ -1,43 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CountDown : MonoBehaviour
 {
-    [SerializeField] private Text uiText;
+    [SerializeField] private TextMeshProUGUI uiText;
     [SerializeField] private float mainTimer;
 
     public static float timer;
-    private bool canCount = true;
-    private bool doOnce = false;
 
     void Start()
     {
         timer = mainTimer;
+        uiText = GetComponent<TextMeshProUGUI>();
     }
 
 
     void Update()
     {
-        if (timer >= 0.0f && canCount)
+        if (timer >= 0.0f)
         {
             timer -= Time.deltaTime;
-            uiText.text = timer.ToString("F");
+            uiText.text = "Timer : " + timer.ToString();
 
         }
-        else if (timer <= 0.0f && !doOnce)
+        else if (timer <= 0.0f)
         {
-            canCount = false;
-            doOnce = true;
-            uiText.text = "0.00";
+            uiText.text = "Timer : " + timer;
             timer = 0.0f;
         }
 
         if (timer <= 0.0f)
         {
-            SceneManager.LoadScene("Lose");
+            GameManager.Instance.LaunchBoss();
+            gameObject.SetActive(false);
+            enabled = false;
         }
     }
 }
