@@ -36,6 +36,7 @@ public class Torture : MonoBehaviour
             tortured = true;
             GameManager.Instance.Victim++;
         }
+        GameManager.Instance.Boss.VictimeKill();
     }
 
     void Restart()
@@ -46,5 +47,6 @@ public class Torture : MonoBehaviour
             tortured = false;
             GameManager.Instance.Victim--;
         }
+        GameManager.Instance.Boss.VictimeKill();
     }
 }
