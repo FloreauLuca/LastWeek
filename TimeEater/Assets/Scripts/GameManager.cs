@@ -49,6 +49,11 @@ public class GameManager : MonoBehaviour
     }
 
     private Boss boss;
+
+    public Boss Boss
+    {
+        get { return boss; }
+    }
     public bool bossMode;
 
     private void Awake()

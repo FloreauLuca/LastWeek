@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Boss : MonoBehaviour
 
     [SerializeField] private Incantation[] incantations;
     [SerializeField] private Torture[] prisoniers;
+    [SerializeField] private GameObject[] prisoniersImage;
     [SerializeField] private Door door;
 
     private bool startBoss = false;
@@ -115,5 +117,13 @@ public class Boss : MonoBehaviour
             }
         }
         return true;
+    }
+
+    public void VictimeKill()
+    {
+        for (int i = 0; i < prisoniers.Length; i++)
+        {
+            prisoniersImage[i].GetComponent<Image>().enabled = !prisoniers[i].Tortured;
+        }
     }
 }
