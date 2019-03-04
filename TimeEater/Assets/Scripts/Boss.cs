@@ -1,9 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
+    private int bossState = 0;
+
+    public int BossState
+    {
+        get { return bossState; }
+        set
+        {
+            bossState = value;
+            if (bossState < 4)
+            {
+                puzzleTileMap[bossState - 1].SetActive(false);
+                puzzleTileMap[bossState].SetActive(true);
+                GameManager.Instance.Player.StartPosition = GameManager.Instance.Player.transform.position;
+            }
+        }
+    }
+
     private bool dead = false;
 
     [SerializeField] private GameObject bulletPrefab;
@@ -16,9 +34,14 @@ public class Boss : MonoBehaviour
 
     [SerializeField] private Incantation[] incantations;
     [SerializeField] private Torture[] prisoniers;
+    [SerializeField] private GameObject[] prisoniersImage;
+    [SerializeField] private GameObject[] puzzleTileMap;
     [SerializeField] private Door door;
 
     private bool startBoss = false;
+
+
+    [SerializeField] private CinematicManager cinematic;
 
     public bool StartBoss
     {
@@ -29,7 +52,7 @@ public class Boss : MonoBehaviour
             if (startBoss)
             {
 
-                StartCoroutine(SpawnBullet());
+                //StartCoroutine(SpawnBullet());
             }
         }
     }
@@ -44,12 +67,15 @@ public class Boss : MonoBehaviour
         if (door.Closed && VictimeTest())
         {
             door.Closed = false;
+            cinematic.DoorCinematic();
+            door.GetComponent<SpriteRenderer>().color = Color.white;
         }
 
         if (IncantationTest())
         {
             dead = true;
-            GameManager.Instance.Win();
+            cinematic.EndCinematic();
+            //GameManager.Instance.Win();
         }
     }
 
@@ -116,4 +142,13 @@ public class Boss : MonoBehaviour
         }
         return true;
     }
+
+    public void VictimeKill()
+    {
+        for (int i = 0; i < prisoniers.Length; i++)
+        {
+            prisoniersImage[i].GetComponent<Image>().enabled = !prisoniers[i].Tortured;
+        }
+    }
+    
 }

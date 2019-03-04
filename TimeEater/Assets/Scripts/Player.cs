@@ -47,6 +47,11 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask raycastLayerMask;
 
     [SerializeField] private float playerSpeed;
+
+    public float PlayerSpeed
+    {
+        get { return playerSpeed; }
+    }
     private int timerspeed = 0;
 
 
@@ -56,9 +61,17 @@ public class Player : MonoBehaviour
     private BoxCollider2D box;
     private Animator animator;
 
+    [SerializeField] private Sprite spriteD;
+    [SerializeField] private Sprite spriteU;
+    [SerializeField] private Sprite spriteR;
+    [SerializeField] private Sprite spriteL;
+
+    private SpriteRenderer spriteRenderer;
+
     private Vector3 direction;
 
     [SerializeField] private GameObject lifeText;
+    [SerializeField] private GameObject prisonniereList;
     [SerializeField] private int life;
 
     private Vector3 startPosition;
@@ -93,7 +106,7 @@ public class Player : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
-
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         lifeText.GetComponent<TextMeshProUGUI>().text = "Life : " + life;
         startPosition = transform.position;
     }
@@ -109,6 +122,7 @@ public class Player : MonoBehaviour
                     if (Input.GetButton("Right") && !isMoving)
                     {
                         direction = Vector3.right * scale;
+                        spriteRenderer.sprite = spriteR;
                         animator.SetInteger("Move", 2);
                         if (DetectWall(direction))
                         {
@@ -119,9 +133,10 @@ public class Player : MonoBehaviour
                     else if (Input.GetButton("Left") && !isMoving)
                     {
                         direction = Vector3.left * scale;
+                        spriteRenderer.sprite = spriteL;
                         animator.SetInteger("Move", 4);
 
-                    if (DetectWall(direction))
+                        if (DetectWall(direction))
                         {
                             direction = Vector2.zero;
                         }
@@ -129,9 +144,10 @@ public class Player : MonoBehaviour
                     else if (Input.GetButton("Up") && !isMoving)
                     {
                         direction = Vector3.up * scale;
+                        spriteRenderer.sprite = spriteU;
                         animator.SetInteger("Move", 1);
 
-                    if (DetectWall(direction))
+                        if (DetectWall(direction))
                         {
                             direction = Vector2.zero;
                         }
@@ -139,9 +155,10 @@ public class Player : MonoBehaviour
                     else if (Input.GetButton("Down") && !isMoving)
                     {
                         direction = Vector3.down * scale;
+                        spriteRenderer.sprite = spriteD;
                         animator.SetInteger("Move", 3);
 
-                    if (DetectWall(direction))
+                        if (DetectWall(direction))
                         {
                             direction = Vector2.zero;
                         }
@@ -276,16 +293,12 @@ public class Player : MonoBehaviour
 
             }
         }
-
+        
         if (GameManager.Instance.bossMode)
         {
-            lifeText.SetActive(true);
-
+            prisonniereList.SetActive(false);
         }
-        else
-        {
-            lifeText.SetActive(false);
-        }
+        
     }
 
     public void InvincibilityStart()

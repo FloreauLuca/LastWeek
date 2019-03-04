@@ -66,6 +66,7 @@ public class Door : MonoBehaviour
         GameManager.Instance.Player.transform.position = playerTranslation.position;
         GameManager.Instance.Player.StartPosition = playerTranslation.position;
         GameManager.Instance.Camera.transform.position = cameraTranslation.position;
+        GameManager.Instance.Camera.StartPosition = cameraTranslation.position;
         GameManager.Instance.Player.PlayerLocation = newPlayerLocation;
         GameManager.Instance.Player.Door = false;
 

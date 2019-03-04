@@ -6,6 +6,10 @@ public class Torture : MonoBehaviour
 {
     [SerializeField] public Location myLocation;
 
+    [SerializeField] private Sprite killSprite;
+    [SerializeField] private GameObject blood;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
     private bool tortured = false;
 
     public bool Tortured
@@ -24,18 +28,22 @@ public class Torture : MonoBehaviour
 
         if (Input.GetButtonDown("Restart") && GameManager.Instance.Player.PlayerLocation == myLocation)
         {
-            Restart();
+            //Restart();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        GetComponentInChildren<SpriteRenderer>().color = Color.red;
+        spriteRenderer.sprite = killSprite;
+        spriteRenderer.color = new Color(255, 50, 50);
+        blood.SetActive(true);
+
         if (!tortured)
         {
             tortured = true;
             GameManager.Instance.Victim++;
         }
+        GameManager.Instance.Boss.VictimeKill();
     }
 
     void Restart()
@@ -46,5 +54,6 @@ public class Torture : MonoBehaviour
             tortured = false;
             GameManager.Instance.Victim--;
         }
+        GameManager.Instance.Boss.VictimeKill();
     }
 }
