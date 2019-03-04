@@ -287,16 +287,17 @@ public class Player : MonoBehaviour
 
             }
         }
-
+        /*
         if (GameManager.Instance.bossMode)
         {
-            lifeText.SetActive(true);
+            //lifeText.SetActive(true);
 
         }
         else
         {
             lifeText.SetActive(false);
         }
+        */
     }
 
     public void InvincibilityStart()

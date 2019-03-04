@@ -13,10 +13,12 @@ public class Boss : MonoBehaviour
         set
         {
             bossState = value;
-
-            puzzleTileMap[bossState-1].SetActive(false);
-            puzzleTileMap[bossState].SetActive(true);
-            GameManager.Instance.Player.StartPosition = GameManager.Instance.Player.transform.position;
+            if (bossState < 4)
+            {
+                puzzleTileMap[bossState - 1].SetActive(false);
+                puzzleTileMap[bossState].SetActive(true);
+                GameManager.Instance.Player.StartPosition = GameManager.Instance.Player.transform.position;
+            }
         }
     }
 
