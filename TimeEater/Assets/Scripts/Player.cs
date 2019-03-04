@@ -117,7 +117,7 @@ public class Player : MonoBehaviour
                     {
                         direction = Vector3.right * scale;
                         spriteRenderer.sprite = spriteR;
-                        //animator.SetInteger("Move", 2);
+                        animator.SetInteger("Move", 2);
                         if (DetectWall(direction))
                         {
                             direction = Vector2.zero;
@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
                     {
                         direction = Vector3.left * scale;
                         spriteRenderer.sprite = spriteL;
-                        //animator.SetInteger("Move", 4);
+                        animator.SetInteger("Move", 4);
 
                         if (DetectWall(direction))
                         {
@@ -139,7 +139,7 @@ public class Player : MonoBehaviour
                     {
                         direction = Vector3.up * scale;
                         spriteRenderer.sprite = spriteU;
-                        //animator.SetInteger("Move", 1);
+                        animator.SetInteger("Move", 1);
 
                         if (DetectWall(direction))
                         {
@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
                     {
                         direction = Vector3.down * scale;
                         spriteRenderer.sprite = spriteD;
-                        //animator.SetInteger("Move", 3);
+                        animator.SetInteger("Move", 3);
 
                         if (DetectWall(direction))
                         {
