@@ -24,7 +24,7 @@ public class Torture : MonoBehaviour
 
         if (Input.GetButtonDown("Restart") && GameManager.Instance.Player.PlayerLocation == myLocation)
         {
-            Restart();
+            //Restart();
         }
     }
 

@@ -5,6 +5,21 @@ using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
+    private int bossState = 0;
+
+    public int BossState
+    {
+        get { return bossState; }
+        set
+        {
+            bossState = value;
+
+            puzzleTileMap[bossState-1].SetActive(false);
+            puzzleTileMap[bossState].SetActive(true);
+            GameManager.Instance.Player.StartPosition = GameManager.Instance.Player.transform.position;
+        }
+    }
+
     private bool dead = false;
 
     [SerializeField] private GameObject bulletPrefab;
@@ -18,6 +33,7 @@ public class Boss : MonoBehaviour
     [SerializeField] private Incantation[] incantations;
     [SerializeField] private Torture[] prisoniers;
     [SerializeField] private GameObject[] prisoniersImage;
+    [SerializeField] private GameObject[] puzzleTileMap;
     [SerializeField] private Door door;
 
     private bool startBoss = false;
@@ -31,7 +47,7 @@ public class Boss : MonoBehaviour
             if (startBoss)
             {
 
-                StartCoroutine(SpawnBullet());
+                //StartCoroutine(SpawnBullet());
             }
         }
     }
@@ -126,4 +142,5 @@ public class Boss : MonoBehaviour
             prisoniersImage[i].GetComponent<Image>().enabled = !prisoniers[i].Tortured;
         }
     }
+    
 }
