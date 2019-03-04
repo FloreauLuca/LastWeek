@@ -6,11 +6,17 @@ public class CameraManager : MonoBehaviour
 {
 
 
+    private Vector3 startPosition;
 
+    public Vector3 StartPosition
+    {
+        get { return startPosition; }
+        set { startPosition = value; }
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        startPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -20,5 +26,13 @@ public class CameraManager : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, -10);
         }
+    }
+
+    private IEnumerator ResetCamera()
+    {
+        yield return new WaitForSeconds(1);
+        Debug.Log("ResetCamera()");
+        transform.position = startPosition;
+
     }
 }

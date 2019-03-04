@@ -6,6 +6,10 @@ public class Torture : MonoBehaviour
 {
     [SerializeField] public Location myLocation;
 
+    [SerializeField] private Sprite killSprite;
+    [SerializeField] private GameObject blood;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
     private bool tortured = false;
 
     public bool Tortured
@@ -30,7 +34,10 @@ public class Torture : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        GetComponentInChildren<SpriteRenderer>().color = Color.red;
+        spriteRenderer.sprite = killSprite;
+        spriteRenderer.color = new Color(255, 50, 50);
+        blood.SetActive(true);
+
         if (!tortured)
         {
             tortured = true;

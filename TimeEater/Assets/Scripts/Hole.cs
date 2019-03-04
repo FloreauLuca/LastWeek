@@ -33,8 +33,9 @@ public class Hole : MonoBehaviour
     {
         if (other.CompareTag("Rock"))
         {
+
             other.GetComponent<BoxCollider2D>().enabled = false;
-            //other.GetComponent<Rock>().enabled = false;
+            other.GetComponent<Rock>().Hole = true;
             other.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             other.transform.position = transform.position;
             GetComponent<BoxCollider2D>().enabled = false;

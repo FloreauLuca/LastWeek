@@ -32,4 +32,9 @@ public class CinematicManager : MonoBehaviour
     {
         bossCinematic.Play();
     }
+
+    public void End()
+    {
+        GameManager.Instance.Win();
+    }
 }
