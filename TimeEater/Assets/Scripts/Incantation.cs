@@ -18,13 +18,14 @@ public class Incantation : Hole
         {
             other.GetComponent<BoxCollider2D>().enabled = false;
             other.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            //other.GetComponent<Rock>().enabled = false;
+            other.GetComponent<Rock>().enabled = false;
             other.transform.position = transform.position;
+            other.transform.parent = transform;
             GetComponent<BoxCollider2D>().enabled = true;
             filled = true;
+            GameManager.Instance.Boss.BossState++;
         }
     }
-
 
     protected virtual void OnCollisionEnter2D(Collision2D other)
     {
@@ -38,8 +39,8 @@ public class Incantation : Hole
 
     protected override void Restart()
     {
-        base.Restart();
-        filled = false;
+        //base.Restart();
+        //filled = false;
     }
 
 }
