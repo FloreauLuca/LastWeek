@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fixe: 0
-  myLocation: 0
+  myLocation: 6
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 2048

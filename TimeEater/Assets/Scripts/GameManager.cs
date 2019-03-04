@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour
             {
                 player.CasePercase = false;
             }
+            
         }
         boss = GameObject.FindObjectOfType<Boss>();
         camera = GameObject.FindObjectOfType<CameraManager>();
