@@ -47,6 +47,11 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask raycastLayerMask;
 
     [SerializeField] private float playerSpeed;
+
+    public float PlayerSpeed
+    {
+        get { return playerSpeed; }
+    }
     private int timerspeed = 0;
 
 
@@ -66,6 +71,7 @@ public class Player : MonoBehaviour
     private Vector3 direction;
 
     [SerializeField] private GameObject lifeText;
+    [SerializeField] private GameObject prisonniereList;
     [SerializeField] private int life;
 
     private Vector3 startPosition;
@@ -287,16 +293,12 @@ public class Player : MonoBehaviour
 
             }
         }
-
+        
         if (GameManager.Instance.bossMode)
         {
-            lifeText.SetActive(true);
-
+            prisonniereList.SetActive(false);
         }
-        else
-        {
-            lifeText.SetActive(false);
-        }
+        
     }
 
     public void InvincibilityStart()

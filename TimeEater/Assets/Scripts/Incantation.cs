@@ -14,7 +14,7 @@ public class Incantation : Hole
 
     public override void Collision(GameObject other)
     {
-        if (other.CompareTag("Crystal"))
+        if (other.CompareTag("Crystal") && !filled)
         {
             other.GetComponent<BoxCollider2D>().enabled = false;
             other.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
