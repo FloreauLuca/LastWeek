@@ -38,6 +38,9 @@ public class Boss : MonoBehaviour
 
     private bool startBoss = false;
 
+
+    [SerializeField] private CinematicManager cinematic;
+
     public bool StartBoss
     {
         get { return startBoss; }
@@ -62,12 +65,15 @@ public class Boss : MonoBehaviour
         if (door.Closed && VictimeTest())
         {
             door.Closed = false;
+            cinematic.DoorCinematic();
+            door.GetComponent<SpriteRenderer>().color = Color.white;
         }
 
         if (IncantationTest())
         {
             dead = true;
-            GameManager.Instance.Win();
+            cinematic.EndCinematic();
+            //GameManager.Instance.Win();
         }
     }
 
