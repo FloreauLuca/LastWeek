@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5598831657690037979}
   - component: {fileID: 3450512386812829558}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: rocher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 7898990411232294143}
   - component: {fileID: 8952117779058054913}
   - component: {fileID: 827577506977048711}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,3 +150,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f1629ecb8d6dc4c93c4793745e148d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myLocation: 6
