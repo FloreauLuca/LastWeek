@@ -14,6 +14,21 @@ public class Rock : Obstacle
 
     private Animator animator;
 
+
+    private bool isMoving = false;
+    public bool IsMoving
+    {
+        get { return isMoving; }
+    }
+
+    private bool hole;
+
+    public bool Hole
+    {
+        get { return hole; }
+        set { hole = value; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +70,7 @@ public class Rock : Obstacle
             }
             else
             {
-                transform.position += direction;
+                StartCoroutine(Move(transform.position + direction));
             }
         }
         else
@@ -115,7 +130,7 @@ public class Rock : Obstacle
         }
         else
         {
-            transform.position += orientation;
+            StartCoroutine(Move(transform.position + orientation));
             animator.SetFloat("XMove", orientation.x);
             animator.SetFloat("YMove", orientation.y);
             iced = false;
@@ -137,5 +152,25 @@ public class Rock : Obstacle
         {
             GetComponent<Rigidbody2D>().isKinematic = true;
         }
+    }
+
+
+    public IEnumerator Move(Vector3 end)
+    {
+        Vector3 start = transform.position;
+        isMoving = true;
+        for (float i = 0; i <= 100; i += GameManager.Instance.Player.PlayerSpeed+5)
+        {
+            transform.position = Vector3.Lerp(start, end, i / 100);
+            if (hole)
+            {
+                continue;
+            }
+            yield return null;
+        }
+
+        transform.position = end;
+        isMoving = false;
+
     }
 }
