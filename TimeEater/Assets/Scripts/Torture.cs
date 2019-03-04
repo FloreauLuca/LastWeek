@@ -24,7 +24,7 @@ public class Torture : MonoBehaviour
 
         if (Input.GetButtonDown("Restart") && GameManager.Instance.Player.PlayerLocation == myLocation)
         {
-            Restart();
+            //Restart();
         }
     }
 
@@ -36,6 +36,7 @@ public class Torture : MonoBehaviour
             tortured = true;
             GameManager.Instance.Victim++;
         }
+        GameManager.Instance.Boss.VictimeKill();
     }
 
     void Restart()
@@ -46,5 +47,6 @@ public class Torture : MonoBehaviour
             tortured = false;
             GameManager.Instance.Victim--;
         }
+        GameManager.Instance.Boss.VictimeKill();
     }
 }

@@ -74,7 +74,7 @@ public class Rock : Obstacle
         }
     }
 
-    void Restart()
+    protected virtual void Restart()
     {
         transform.position = startPosition;
         
