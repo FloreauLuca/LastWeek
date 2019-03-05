@@ -95,6 +95,7 @@ public class Rock : Obstacle
         
         myBoxCollider2D.enabled = true;
         myrb2D.velocity = Vector2.zero;
+        GetComponentInChildren<SpriteRenderer>().color = new Color(1, 1, 1, 1);
     }
 
 
