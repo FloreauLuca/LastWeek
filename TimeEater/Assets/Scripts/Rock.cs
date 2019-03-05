@@ -70,7 +70,7 @@ public class Rock : Obstacle
             }
             else
             {
-                StartCoroutine(Move(transform.position + direction));
+                transform.position += direction;
             }
         }
         else
@@ -131,7 +131,7 @@ public class Rock : Obstacle
         }
         else
         {
-            StartCoroutine(Move(transform.position + orientation));
+            transform.position += orientation;
             animator.SetFloat("XMove", orientation.x);
             animator.SetFloat("YMove", orientation.y);
             iced = false;
@@ -155,7 +155,7 @@ public class Rock : Obstacle
         }
     }
 
-
+    /*
     public IEnumerator Move(Vector3 end)
     {
         Vector3 start = transform.position;
@@ -174,4 +174,5 @@ public class Rock : Obstacle
         isMoving = false;
 
     }
+    */
 }
