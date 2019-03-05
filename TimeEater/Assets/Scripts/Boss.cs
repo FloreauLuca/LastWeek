@@ -13,14 +13,17 @@ public class Boss : MonoBehaviour
         set
         {
             bossState = value;
-            if (bossState < 4)
+            if (bossState < 5)
             {
+                particleSystem.Play();
                 puzzleTileMap[bossState - 1].SetActive(false);
                 puzzleTileMap[bossState].SetActive(true);
-                GameManager.Instance.Player.StartPosition = GameManager.Instance.Player.transform.position;
+                GameManager.Instance.Player.StartPosition = GameManager.Instance.Player.transform.position + GameManager.Instance.Player.Direction;
             }
         }
     }
+
+    private ParticleSystem particleSystem;
 
     private bool dead = false;
 
@@ -59,6 +62,7 @@ public class Boss : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        particleSystem = GetComponentInChildren<ParticleSystem>();
     }
 
     // Update is called once per frame

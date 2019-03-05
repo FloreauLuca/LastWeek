@@ -24,6 +24,9 @@ public class Incantation : Hole
             GetComponent<BoxCollider2D>().enabled = true;
             filled = true;
             GameManager.Instance.Boss.BossState++;
+
+            audioSource.PlayOneShot(audioClip);
+            particule.SetActive(true);
         }
     }
 
