@@ -56,6 +56,10 @@ public class GameManager : MonoBehaviour
     }
     public bool bossMode;
 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip audioClip;
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -91,6 +95,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SetupScene();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void SetupScene() // initialise le niveau
@@ -132,6 +137,8 @@ public class GameManager : MonoBehaviour
     {
         boss.StartBoss = true;
         bossMode = true;
+        audioSource.clip = audioClip;
+        audioSource.Play();
     }
 }
 

@@ -70,6 +70,13 @@ public class Player : MonoBehaviour
 
     private Vector3 direction;
 
+    public Vector3 Direction
+    {
+        get { return direction; }
+    }
+
+    
+
     [SerializeField] private GameObject lifeText;
     [SerializeField] private GameObject prisonniereList;
     [SerializeField] private int life;

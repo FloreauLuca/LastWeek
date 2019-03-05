@@ -29,6 +29,11 @@ public class Rock : Obstacle
         set { hole = value; }
     }
 
+
+    private AudioSource audioSource;
+
+    [SerializeField]private AudioClip audioClip;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +41,7 @@ public class Rock : Obstacle
         startPosition = transform.position;
         GetComponent<Rigidbody2D>().isKinematic = true;
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -132,6 +138,7 @@ public class Rock : Obstacle
         else
         {
             transform.position += orientation;
+            audioSource.PlayOneShot(audioClip);
             animator.SetFloat("XMove", orientation.x);
             animator.SetFloat("YMove", orientation.y);
             iced = false;

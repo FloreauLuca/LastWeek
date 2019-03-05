@@ -17,9 +17,13 @@ public class Torture : MonoBehaviour
         get { return tortured; }
     }
     // Start is called before the first frame update
+
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip scream;
+    [SerializeField] private AudioClip slash;
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -42,6 +46,9 @@ public class Torture : MonoBehaviour
         {
             tortured = true;
             GameManager.Instance.Victim++;
+
+            audioSource.PlayOneShot(scream);
+            audioSource.PlayOneShot(slash);
         }
         GameManager.Instance.Boss.VictimeKill();
     }
