@@ -60,6 +60,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip audioClip2;
     [SerializeField] private AudioClip audioClip1;
 
+    private void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Quit();
+        }
+    }
 
     private void Awake()
     {
@@ -84,6 +91,14 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnLevelFinishedLoadingScene;
     }
+
+    private void Quit()
+    {
+#if UNITY_STANDALONE_WIN
+        Application.Quit();
+#endif
+    }
+
 
     //this function is activated every time a scene is loaded
     private void OnLevelFinishedLoadingScene(Scene scene, LoadSceneMode mode)

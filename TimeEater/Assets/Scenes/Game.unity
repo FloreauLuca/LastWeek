@@ -16415,6 +16415,12 @@ PrefabInstance:
       propertyPath: myLocation
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2421594380970971563, guid: c0962ad37f6133a45bc8ae22d7fe14ff,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243112353143373430, guid: d3986930a5742c24a85690a30eb967e6,
+        type: 2}
     - target: {fileID: 7560136573049391046, guid: c0962ad37f6133a45bc8ae22d7fe14ff,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -16425,12 +16431,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2421594380970971563, guid: c0962ad37f6133a45bc8ae22d7fe14ff,
-        type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 243112353143373430, guid: d3986930a5742c24a85690a30eb967e6,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0962ad37f6133a45bc8ae22d7fe14ff, type: 3}
 --- !u!4 &648527539 stripped
@@ -21411,7 +21411,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Vite, va tuer les prisonnieres avant que le heros ne viennent les sauves.
+  m_text: Vite, va tuer les prisonnieres avant que le heros ne viennent les sauver.
     Je m'occupe de le ralentir.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4da09979f34373a40a7e293e7cb8a469, type: 2}
@@ -29354,11 +29354,11 @@ MonoBehaviour:
     lineCount: 2
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -36506,6 +36506,12 @@ PrefabInstance:
       propertyPath: myLocation
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2421594380970971563, guid: c0962ad37f6133a45bc8ae22d7fe14ff,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243112353143373430, guid: d3986930a5742c24a85690a30eb967e6,
+        type: 2}
     - target: {fileID: 7560136573049391046, guid: c0962ad37f6133a45bc8ae22d7fe14ff,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -36516,12 +36522,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2421594380970971563, guid: c0962ad37f6133a45bc8ae22d7fe14ff,
-        type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 243112353143373430, guid: d3986930a5742c24a85690a30eb967e6,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0962ad37f6133a45bc8ae22d7fe14ff, type: 3}
 --- !u!4 &1600090186 stripped
@@ -49612,17 +49612,17 @@ PrefabInstance:
       propertyPath: myLocation
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 7560136573049391046, guid: c0962ad37f6133a45bc8ae22d7fe14ff,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2421594380970971563, guid: c0962ad37f6133a45bc8ae22d7fe14ff,
         type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
       objectReference: {fileID: 243112353143373430, guid: d3986930a5742c24a85690a30eb967e6,
         type: 2}
+    - target: {fileID: 7560136573049391046, guid: c0962ad37f6133a45bc8ae22d7fe14ff,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0962ad37f6133a45bc8ae22d7fe14ff, type: 3}
 --- !u!4 &2103690559 stripped
