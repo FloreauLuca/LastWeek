@@ -18,7 +18,7 @@ public class Boss : MonoBehaviour
                 particleSystem.Play();
                 puzzleTileMap[bossState - 1].SetActive(false);
                 puzzleTileMap[bossState].SetActive(true);
-                GameManager.Instance.Player.StartPosition = GameManager.Instance.Player.transform.position;
+                GameManager.Instance.Player.StartPosition = GameManager.Instance.Player.transform.position + GameManager.Instance.Player.Direction;
             }
         }
     }

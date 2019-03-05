@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 8243cbf8ab934694eb146b1d8822d1be
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Lycanthrope
+  fontNames:
+  - Lycanthrope
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 6f228fa0fabbd1b4c846105a154ede0d, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

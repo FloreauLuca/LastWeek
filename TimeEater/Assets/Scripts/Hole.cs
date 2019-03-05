@@ -7,10 +7,14 @@ public class Hole : MonoBehaviour
     [SerializeField] public Location myLocation;
 
     [SerializeField] protected GameObject particule;
+
+    protected AudioSource audioSource;
+
+    [SerializeField] protected AudioClip audioClip;
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -44,7 +48,7 @@ public class Hole : MonoBehaviour
             particule.SetActive(true);
             GetComponentInChildren<SpriteRenderer>().color = new Color(1, 1, 1, 0.2f);
             other.GetComponentInChildren<SpriteRenderer>().color = new Color(1, 1, 1, 0.2f);
-
+            audioSource.PlayOneShot(audioClip);
         }
     }
 

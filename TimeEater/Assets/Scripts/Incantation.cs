@@ -25,6 +25,7 @@ public class Incantation : Hole
             filled = true;
             GameManager.Instance.Boss.BossState++;
 
+            audioSource.PlayOneShot(audioClip);
             particule.SetActive(true);
         }
     }
