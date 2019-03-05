@@ -57,7 +57,8 @@ public class GameManager : MonoBehaviour
     public bool bossMode;
 
     private AudioSource audioSource;
-    [SerializeField] private AudioClip audioClip;
+    [SerializeField] private AudioClip audioClip2;
+    [SerializeField] private AudioClip audioClip1;
 
 
     private void Awake()
@@ -114,6 +115,13 @@ public class GameManager : MonoBehaviour
             
         }
         boss = GameObject.FindObjectOfType<Boss>();
+        if (boss)
+        {
+            boss.StartBoss = false;
+            bossMode = false;
+            audioSource.clip = audioClip1;
+            audioSource.Play();
+        }
         camera = GameObject.FindObjectOfType<CameraManager>();
         Time.timeScale = 1;
         end = false;
@@ -128,7 +136,7 @@ public class GameManager : MonoBehaviour
 
     public void Win()
     {
-        //Time.timeScale = 0;
+        //Time.timeScale = 0
         SceneManager.LoadScene("Win");
         end = true;
     }
@@ -137,8 +145,9 @@ public class GameManager : MonoBehaviour
     {
         boss.StartBoss = true;
         bossMode = true;
-        audioSource.clip = audioClip;
+        audioSource.clip = audioClip2;
         audioSource.Play();
     }
+    
 }
 
